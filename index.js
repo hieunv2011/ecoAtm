@@ -49,6 +49,6 @@ app.use(
 // Xử lý lỗi toàn cục
 app.use(globalErrorHandler);
 
-// ❌ KHÔNG dùng app.listen ở đây
-// ✅ Xuất app ra để dùng với Vercel
-module.exports = app;
+app.listen(3000, () => {
+  console.log(`Server running on port ${3000}`);
+});
