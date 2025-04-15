@@ -17,10 +17,11 @@ const swaggerDocs = require("./utils/swagger");
 
 const app = express();
 app.use(express.json());
+
+// Kết nối MongoDB
 connectDB();
 
-const PORT = process.env.PORT || 3000;
-
+// Định nghĩa route
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/logs", logRoutes);
@@ -29,7 +30,15 @@ app.use("/api/v1/cameras", cameraRoutes);
 app.use("/api/v1/events", eventRoutes);
 app.use("/api/v1/config", configRoutes);
 
+// Swagger
 swaggerDocs(app);
+
+// Route mặc định
+app.get("/", (req, res) => {
+  res.send("EcoATM server is running...");
+});
+
+// Bắt route không tồn tại
 app.use(
   "*",
   catchAsync(async (req, res, next) => {
@@ -37,6 +46,9 @@ app.use(
   })
 );
 
+// Xử lý lỗi toàn cục
 app.use(globalErrorHandler);
 
-app.listen(PORT, () => console.log(`Express server running on port ${PORT}`));
+// ❌ KHÔNG dùng app.listen ở đây
+// ✅ Xuất app ra để dùng với Vercel
+module.exports = app;
