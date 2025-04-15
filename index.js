@@ -16,7 +16,6 @@ const configRoutes = require("./routes/configRoutes");
 const swaggerDocs = require("./utils/swagger");
 
 const app = express();
-// app.use(cors());
 app.use(express.json());
 
 // Kết nối MongoDB
